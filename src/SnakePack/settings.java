@@ -20,9 +20,16 @@ public class settings extends javax.swing.JFrame {
      */
     public settings() {
         initComponents();
+        init();
         setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setTitle("Settings");
+    }
+    
+    public void init() {
+        jButton1.setBackground(Colors.head);
+        jButton2.setBackground(Colors.body);
+        jButton3.setBackground(Colors.tail);
     }
 
     /**
@@ -43,7 +50,7 @@ public class settings extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Choose");
+        jButton1.setText("Pick");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -54,7 +61,7 @@ public class settings extends javax.swing.JFrame {
 
         jLabel2.setText("Snake Body Color:");
 
-        jButton2.setText("Choose");
+        jButton2.setText("Pick");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -63,7 +70,7 @@ public class settings extends javax.swing.JFrame {
 
         jLabel3.setText("Snake Tail Color:");
 
-        jButton3.setText("Choose");
+        jButton3.setText("Pick");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -79,7 +86,7 @@ public class settings extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -114,18 +121,26 @@ public class settings extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Colors.head = JColorChooser.showDialog(this, "Select a color", Color.red);
-        
+        Color temp = JColorChooser.showDialog(this, "Select a color", Color.red);
+        if(temp != null)
+            Colors.head = temp;
+        init();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        Colors.tail = JColorChooser.showDialog(this, "Select a color", Color.blue);
+        Color temp = JColorChooser.showDialog(this, "Select a color", Color.red);
+        if(temp != null)
+            Colors.tail = temp;
+        init();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Colors.body = JColorChooser.showDialog(this, "Select a color", Color.green);
+        Color temp = JColorChooser.showDialog(this, "Select a color", Color.red);
+        if(temp != null)
+            Colors.body = temp;
+        init();
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
