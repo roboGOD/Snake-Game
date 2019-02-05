@@ -195,6 +195,7 @@ public class home extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        new settings().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

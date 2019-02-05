@@ -21,6 +21,12 @@ import java.util.Random;
  * @author roboGOD
  */
 
+class Colors {
+    static Color head = Color.RED;
+    static Color body = Color.GREEN;
+    static Color tail = Color.BLUE;
+}
+
 public class start extends javax.swing.JFrame {
     int x;
     int y;
@@ -28,10 +34,11 @@ public class start extends javax.swing.JFrame {
     int xinc = 1;
     int yinc = 0;
     int scl = 10;
-    int randx, randy, ttt = 50;
+    int randx, randy, delayMS = 50;
     Random rn = new Random();
+    int prevKey = -1;
     int n = 1;
-    int score = 0;
+    int score = -10;
     int level = 0;
     int colm;
     int rows;
@@ -53,7 +60,7 @@ public class start extends javax.swing.JFrame {
         tailp = new ArrayList<>(8);
         tailp.add(new Point(x, y));
         
-        t = new Timer(ttt, (ActionEvent e) -> {
+        t = new Timer(delayMS, (ActionEvent e) -> {
             start.this.repaint();
         });
         t.start();
@@ -75,14 +82,14 @@ public class start extends javax.swing.JFrame {
             g.setColor(Color.GREEN);
             g.fillRect(randx, randy, scl, scl);
             
-            g.setColor(Color.RED);
+            g.setColor(Colors.tail);
             g.fillRect(tailp.get(0).x, tailp.get(0).y, scl, scl);
 
-            g.setColor(Color.MAGENTA);
+            g.setColor(Colors.body);
             for (int i = 1; i < n; i++)
                 g.fillRect(tailp.get(i).x, tailp.get(i).y, scl, scl);
      
-            g.setColor(Color.BLUE);
+            g.setColor(Colors.head);
             g.fillRect(x, y, scl, scl);
             eats();
         } catch (NullPointerException e) {
@@ -116,7 +123,7 @@ public class start extends javax.swing.JFrame {
             x += xinc*scl;
             y += yinc*scl;
         
-            score = n*scl;
+            score = n*scl-10;
             if(score>=1000)
                 level = 5;
             else if(score>=750)
@@ -130,8 +137,8 @@ public class start extends javax.swing.JFrame {
             
             jLabel1.setText("      Level:  "+String.valueOf(level+1)+"       Score:   "+String.valueOf(score));
             
-            ttt = 50 - level*6;
-            t.setDelay(ttt);
+            delayMS = 50 - level*6;
+            t.setDelay(delayMS);
             if(x > getWidth()-scl ||y > getHeight()-jLabel1.getHeight()-scl|| x < 0 || y < scl+15 || selfEat()) { 
                 try {
                     Thread.sleep(400);
@@ -206,10 +213,21 @@ public class start extends javax.swing.JFrame {
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
-        switch (evt.getKeyCode()) {
+        int keyCode = evt.getKeyCode();
+        if(keyCode == KeyEvent.VK_LEFT && prevKey == KeyEvent.VK_RIGHT)
+            return;
+        else if(keyCode == KeyEvent.VK_RIGHT && prevKey == KeyEvent.VK_LEFT)
+            return;
+        else if(keyCode == KeyEvent.VK_UP && prevKey == KeyEvent.VK_DOWN)
+            return;
+        else if(keyCode == KeyEvent.VK_DOWN && prevKey == KeyEvent.VK_UP)
+            return;
+       
+        prevKey = keyCode;
+        switch (keyCode) {
             case KeyEvent.VK_UP:
-                yinc=-1;
-                xinc=0;
+                yinc = -1;
+                xinc = 0;
                 break;
             case KeyEvent.VK_DOWN:
                 yinc = 1;
@@ -217,11 +235,11 @@ public class start extends javax.swing.JFrame {
                 break;
             case KeyEvent.VK_LEFT:
                 xinc = -1;
-                yinc=0;
+                yinc = 0;
                 break;
             case KeyEvent.VK_RIGHT:
                 xinc = 1;
-                yinc =0;
+                yinc = 0;
                 break;
             case KeyEvent.VK_SPACE:
                 try {
