@@ -43,13 +43,14 @@ public class start extends javax.swing.JFrame {
     int colm;
     int rows;
     ArrayList<Point> tailp;
-    Timer t;
+    Timer timer;
     /**
      * Creates new form start
      */
     public start() {
         initComponents();
         setLocationRelativeTo(null);
+        setResizable(false);
         
         colm = (getHeight()-jLabel1.getHeight()) / scl;
         rows = getWidth() / scl;
@@ -60,10 +61,11 @@ public class start extends javax.swing.JFrame {
         tailp = new ArrayList<>(8);
         tailp.add(new Point(x, y));
         
-        t = new Timer(delayMS, (ActionEvent e) -> {
+        timer = new Timer(delayMS, (ActionEvent e) -> {
             start.this.repaint();
         });
-        t.start();
+        timer.start();
+        
         while(randx==0||randx==1||randy==0||randy==1||randx%2==0||randy%2==0) {
             randx = rn.nextInt(rows);
             randy = rn.nextInt(colm);
@@ -80,7 +82,7 @@ public class start extends javax.swing.JFrame {
             g.fillRect(0, 0, getWidth(), getHeight() - jLabel1.getHeight());
 
             g.setColor(Color.GREEN);
-            g.fillRect(randx, randy, scl, scl);
+            g.fillOval(randx, randy, scl, scl);
             
             g.setColor(Colors.tail);
             g.fillRect(tailp.get(0).x, tailp.get(0).y, scl, scl);
@@ -138,14 +140,15 @@ public class start extends javax.swing.JFrame {
             jLabel1.setText("      Level:  "+String.valueOf(level+1)+"       Score:   "+String.valueOf(score));
             
             delayMS = 50 - level*6;
-            t.setDelay(delayMS);
+            timer.setDelay(delayMS);
+            
             if(x > getWidth()-scl ||y > getHeight()-jLabel1.getHeight()-scl|| x < 0 || y < scl+15 || selfEat()) { 
                 try {
                     Thread.sleep(400);
                 }
                 catch(InterruptedException e){
                 }
-                t.stop();
+                timer.stop();
                 new home(score).setVisible(true);
                 dispose();
             }

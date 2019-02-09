@@ -23,20 +23,23 @@ public class home extends javax.swing.JFrame {
     /**
      * Creates new form home
      */
+    int height=480, width=640;
     public home() {
         init();
         initComponents();
-        setSize(639, 479);
-        setSize(640, 480);
+        setSize(width-1, height-1);
+        setSize(width, height);
+        setResizable(false);
         setLocationRelativeTo(null);
     }
     
     public home(int score) {
         init();
         initComponents();
-        setSize(639, 479);
-        setSize(640, 480);
+        setSize(width-1, height-1);
+        setSize(width, height);
         setLocationRelativeTo(null);
+        setResizable(false);
         jLabel2.setText("Game Over!");
         jLabel3.setText("Your Score: " + String.valueOf(score));
         jLabel4.setText("Press Play to score higher!");
@@ -51,7 +54,7 @@ public class home extends javax.swing.JFrame {
         Image dimg = null;
         try {
             img = ImageIO.read((getClass().getResource("/SnakePack/snake.jpg")));
-            dimg = img.getScaledInstance(640, 480, Image.SCALE_SMOOTH);
+            dimg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         }
         catch(IOException e) {
         }
@@ -59,9 +62,10 @@ public class home extends javax.swing.JFrame {
         setContentPane(new JLabel(new ImageIcon(dimg)));
         setLayout(new FlowLayout());
         
-        setSize(639, 479);
-        setSize(640, 480);
+        setSize(width-1, height-1);
+        setSize(width, height);
         setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**
