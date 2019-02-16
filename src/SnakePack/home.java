@@ -10,6 +10,8 @@ import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,7 +22,7 @@ import javax.swing.JOptionPane;
  * @author roboGOD
  */
 
-class Score {
+class Score implements Serializable {
     private String name;
     private int score;
     
@@ -44,6 +46,7 @@ public class home extends javax.swing.JFrame {
      * Creates new form home
      */
     int height=480, width=640;
+    
     public home() {
         init();
         initComponents();
@@ -66,6 +69,7 @@ public class home extends javax.swing.JFrame {
         jLabel3.setText("Score: "+ s.getName() + " => " + String.valueOf(s.getScore()));
         jLabel4.setText("Press Play to score higher!");
     }
+    
     
     final void init(){       
         setLayout(new BorderLayout());
@@ -205,6 +209,8 @@ public class home extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        dispose();
+        new HighScores().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
