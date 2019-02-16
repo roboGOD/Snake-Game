@@ -11,7 +11,7 @@ import javax.swing.*;
 
 /**
  *
- * @author joker
+ * @author roboGOD
  */
 public class settings extends javax.swing.JFrame {
 

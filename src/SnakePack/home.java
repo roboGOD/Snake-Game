@@ -13,11 +13,31 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author joker
+ * @author roboGOD
  */
+
+class Score {
+    private String name;
+    private int score;
+    
+    Score(String name, int score) {
+        this.name = name;
+        this.score = score;
+    }
+    
+    String getName() {
+        return this.name;
+    }
+    
+    int getScore() {
+        return this.score;
+    }
+}
+
 public class home extends javax.swing.JFrame {
 
     /**
@@ -40,8 +60,10 @@ public class home extends javax.swing.JFrame {
         setSize(width, height);
         setLocationRelativeTo(null);
         setResizable(false);
+        String name = JOptionPane.showInputDialog(this, "Enter your name", "Game Over!", JOptionPane.QUESTION_MESSAGE);
+        Score s = new Score(name, score);
         jLabel2.setText("Game Over!");
-        jLabel3.setText("Your Score: " + String.valueOf(score));
+        jLabel3.setText("Score: "+ s.getName() + " => " + String.valueOf(s.getScore()));
         jLabel4.setText("Press Play to score higher!");
     }
     
