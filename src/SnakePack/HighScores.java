@@ -5,15 +5,96 @@
  */
 package SnakePack;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.TreeSet;
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author joker
+ * @author roboGOD
  */
+
+class Score implements Serializable, Comparable<Score> {
+    private final String name;
+    private final int score;
+    
+    Score(String name, int score) {
+        this.name = name;
+        this.score = score;
+    }
+    
+    String getName() {
+        return this.name;
+    }
+    
+    int getScore() {
+        return this.score;
+    }
+
+    @Override
+    public int compareTo(Score o) {
+        return Integer.compare(this.score, o.score);
+    }
+}
+
+final class ManageScores {
+    static final String filename = "scores.dat";
+    
+    void writeScores(TreeSet<Score> sc) {
+        try {
+            FileOutputStream f = new FileOutputStream(getClass().getResource("/SnakePack/"+filename).toString().substring(5));
+            ObjectOutputStream of = new ObjectOutputStream(f);
+            of.writeObject(sc);
+            of.close();
+        }
+        catch(IOException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+    
+    TreeSet<Score> readScores() {
+        TreeSet<Score> sc = null;
+        try {
+            FileInputStream f = new FileInputStream(getClass().getResource("/SnakePack/"+filename).toString().substring(5));
+            ObjectInputStream of = new ObjectInputStream(f);
+            sc = (TreeSet<Score>)of.readObject();
+            of.close();
+        }
+        catch(ClassNotFoundException | IOException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        return sc;
+    }
+    
+    // Executed for the first time only.
+//    private void writeFirstTime() {
+//        TreeSet<Score> scores = new TreeSet<>();
+//        scores.add(new Score("roboGOD", 23000));
+//        scores.add(new Score("Joker", 4000));
+//        scores.add(new Score("VRock", 3220));
+//        scores.add(new Score("Sahi", 2330));
+//        scores.add(new Score("Jora", 3000));
+//        scores.add(new Score("IITian", 2020));
+//        scores.add(new Score("2 Thru 3", 2000));
+//        scores.add(new Score("NA", 2000));
+//        scores.add(new Score("Google", 2000));
+//        scores.add(new Score("Beta Beta", 2000));
+//        writeScores(scores);
+//    }
+}
+
 public class HighScores extends javax.swing.JFrame {
 
     /**
      * Creates new form HighScores
      */
+    
+    ManageScores m;
     
     public HighScores() {
         initComponents();
@@ -22,7 +103,16 @@ public class HighScores extends javax.swing.JFrame {
     
     final void init() {
         setLocationRelativeTo(null);
+        m = new ManageScores();
+        TreeSet<Score> sc = m.readScores();
+        displayTable(sc);
     }
+    
+    void displayTable(TreeSet<Score> sc) {
+        
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,7 +148,7 @@ public class HighScores extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addContainerGap(329, Short.MAX_VALUE))
+                .addContainerGap(403, Short.MAX_VALUE))
         );
 
         pack();

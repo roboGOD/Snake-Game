@@ -22,23 +22,6 @@ import javax.swing.JOptionPane;
  * @author roboGOD
  */
 
-class Score implements Serializable {
-    private String name;
-    private int score;
-    
-    Score(String name, int score) {
-        this.name = name;
-        this.score = score;
-    }
-    
-    String getName() {
-        return this.name;
-    }
-    
-    int getScore() {
-        return this.score;
-    }
-}
 
 public class home extends javax.swing.JFrame {
 
