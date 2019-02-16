@@ -5,6 +5,7 @@
  */
 package SnakePack;
 
+import java.awt.ScrollPane;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,6 +14,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.TreeSet;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,8 +24,8 @@ import javax.swing.JOptionPane;
  */
 
 class Score implements Serializable, Comparable<Score> {
-    private final String name;
-    private final int score;
+    private String name;
+    private int score;
     
     Score(String name, int score) {
         this.name = name;
@@ -38,7 +42,7 @@ class Score implements Serializable, Comparable<Score> {
 
     @Override
     public int compareTo(Score o) {
-        return Integer.compare(this.score, o.score);
+        return -Integer.compare(this.score, o.score);
     }
 }
 
@@ -67,25 +71,26 @@ final class ManageScores {
         }
         catch(ClassNotFoundException | IOException ex) {
             JOptionPane.showMessageDialog(null, ex);
+            ex.printStackTrace();
         }
         return sc;
     }
     
     // Executed for the first time only.
-//    private void writeFirstTime() {
-//        TreeSet<Score> scores = new TreeSet<>();
-//        scores.add(new Score("roboGOD", 23000));
-//        scores.add(new Score("Joker", 4000));
-//        scores.add(new Score("VRock", 3220));
-//        scores.add(new Score("Sahi", 2330));
-//        scores.add(new Score("Jora", 3000));
-//        scores.add(new Score("IITian", 2020));
-//        scores.add(new Score("2 Thru 3", 2000));
-//        scores.add(new Score("NA", 2000));
-//        scores.add(new Score("Google", 2000));
-//        scores.add(new Score("Beta Beta", 2000));
-//        writeScores(scores);
-//    }
+    private void writeFirstTime() {
+        TreeSet<Score> scores = new TreeSet<>();
+        scores.add(new Score("roboGOD", 23000));
+        scores.add(new Score("Joker", 4000));
+        scores.add(new Score("VRock", 3220));
+        scores.add(new Score("Sahi", 2330));
+        scores.add(new Score("Jora", 3000));
+        scores.add(new Score("IITian", 2020));
+        scores.add(new Score("2 Thru 3", 2000));
+        scores.add(new Score("NA", 2000));
+        scores.add(new Score("Google", 2000));
+        scores.add(new Score("Beta Beta", 2000));
+        writeScores(scores);
+    }
 }
 
 public class HighScores extends javax.swing.JFrame {
@@ -106,9 +111,29 @@ public class HighScores extends javax.swing.JFrame {
         m = new ManageScores();
         TreeSet<Score> sc = m.readScores();
         displayTable(sc);
+        setTitle("High Scores");
+        pack();
+        setVisible(false);
+        setVisible(true);
     }
     
     void displayTable(TreeSet<Score> sc) {
+        DefaultTableModel dtm = new DefaultTableModel(0,0);
+        
+        String header[] = new String[] {"#", "Name", "Score"};
+        dtm.setColumnIdentifiers(header);
+        
+        int id=1;
+        for(Score s: sc) {
+            dtm.addRow(new Object[]{id, s.getName(), s.getScore()});
+            id++;
+            System.out.println(s.getName() + " " + String.valueOf(s.getScore()));
+        }
+        
+        jTable2.setModel(dtm);
+        jTable2.getColumnModel().getColumn(0).setPreferredWidth(20);
+        jTable2.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTable2.getColumnModel().getColumn(2).setPreferredWidth(40);
         
     }
     
@@ -124,6 +149,8 @@ public class HighScores extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,21 +161,40 @@ public class HighScores extends javax.swing.JFrame {
             }
         });
 
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(374, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(0, 467, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addContainerGap(403, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -197,5 +243,7 @@ public class HighScores extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }
