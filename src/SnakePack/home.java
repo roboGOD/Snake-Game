@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.TreeSet;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -29,6 +30,7 @@ public class home extends javax.swing.JFrame {
      * Creates new form home
      */
     int height=480, width=640;
+    ManageScores m;
     
     public home() {
         init();
@@ -48,13 +50,17 @@ public class home extends javax.swing.JFrame {
         setResizable(false);
         String name = JOptionPane.showInputDialog(this, "Enter your name", "Game Over!", JOptionPane.QUESTION_MESSAGE);
         Score s = new Score(name, score);
+        TreeSet<Score> ts = m.readScores();
+        ts.add(s);
+        m.writeScores(ts);
         jLabel2.setText("Game Over!");
         jLabel3.setText("Score: "+ s.getName() + " => " + String.valueOf(s.getScore()));
         jLabel4.setText("Press Play to score higher!");
     }
     
     
-    final void init(){       
+    final void init(){     
+        m = new ManageScores();
         setLayout(new BorderLayout());
         setVisible(true);
         setTitle("Snake!");

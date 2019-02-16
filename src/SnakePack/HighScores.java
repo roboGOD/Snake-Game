@@ -5,7 +5,6 @@
  */
 package SnakePack;
 
-import java.awt.ScrollPane;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,8 +13,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.TreeSet;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,8 +21,8 @@ import javax.swing.table.DefaultTableModel;
  */
 
 class Score implements Serializable, Comparable<Score> {
-    private String name;
-    private int score;
+    private final String name;
+    private final int score;
     
     Score(String name, int score) {
         this.name = name;
@@ -43,7 +40,7 @@ class Score implements Serializable, Comparable<Score> {
     @Override
     public int compareTo(Score o) {
         int compRes = -Integer.compare(this.score, o.score);
-        return (this.getName().equals(o.getName())) ? 0 : ((compRes == 0) ? this.getName().compareTo(o.getName()) : compRes);
+        return ((compRes == 0) ? this.getName().compareTo(o.getName()) : compRes);
     }
 }
 
@@ -78,18 +75,18 @@ final class ManageScores {
     }
     
     // Executed for the first time only.
-    private void writeFirstTime() {
+     private void writeFirstTime() {
         TreeSet<Score> scores = new TreeSet<>();
-        scores.add(new Score("roboGOD", 23000));
-        scores.add(new Score("Joker", 4000));
-        scores.add(new Score("VRock", 3220));
-        scores.add(new Score("Sahi", 2330));
-        scores.add(new Score("Jora", 3000));
-        scores.add(new Score("IITian", 2020));
-        scores.add(new Score("2 Thru 3", 2000));
-        scores.add(new Score("NA", 2000));
-        scores.add(new Score("Google", 2000));
-        scores.add(new Score("Beta Beta", 2000));
+        scores.add(new Score("roboGOD", 2000));
+        scores.add(new Score("Joker", 40));
+        scores.add(new Score("VRock", 50));
+        scores.add(new Score("Sahi", 30));
+        scores.add(new Score("Jora", 30));
+        scores.add(new Score("IITian", 20));
+        scores.add(new Score("2 Thru 3", 00));
+        scores.add(new Score("NA", 00));
+        scores.add(new Score("Google", 00));
+        scores.add(new Score("Beta Beta", 00));
         writeScores(scores);
     }
 }
